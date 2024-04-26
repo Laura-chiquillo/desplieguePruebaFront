@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AutenticacionService {
 
-    apiUrl = 'http://localhost:8000/custom-token-auth/';
+    apiUrl = 'https://app-proyecto-119c428c75f0.herokuapp.com/custom-token-auth/';
 
     constructor(private http: HttpClient,private router: Router) { }
 
