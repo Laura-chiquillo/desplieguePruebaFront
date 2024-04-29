@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Investigador } from '../modelo/investigador';
 import { AutenticacionService } from '../services/autenticacion';
 import { InvestigadorService } from '../services/registroInvestigador';
-import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-navbar',
@@ -57,7 +57,7 @@ export class NavbarComponent {
           if (rolInvestigador === 'Investigador') {
             if (estado) {
               // Si el investigador está activo, redirigir a la URL del perfil del investigador
-              window.location.href = 'http://localhost:4200/investigadores/perfil';
+              window.location.href = 'https://app-proyecto-119c428c75f0.herokuapp.com/investigadores/perfil';
             } else {
               // Si el investigador está inactivo
               console.log('El investigador no está activo');
@@ -71,7 +71,7 @@ export class NavbarComponent {
             }
           } else if (rolInvestigador === 'Administrador') {
             // Si es un administrador, redirigir a la URL del perfil del administrador
-            window.location.href = 'http://localhost:4200/administrador/perfil';
+            window.location.href = 'https://app-proyecto-119c428c75f0.herokuapp.com/administrador/perfil';
           } else {
             // Manejar otros roles si es necesario
             console.log("Rol estudiante")
