@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
@@ -26,6 +26,8 @@ import * as moment from 'moment';
 import { DialogoAvanceEntregableComponent } from '../../investigadores/proyectos/dialogo-avance-entregable/dialogo-avance-entregable.component';
 import { UsuarioSesion } from '../../modelo/usuario';
 import { AutenticacionService } from '../../services/autenticacion';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { DialogoDetalleComponent } from './dialogo-detalle/dialogo-detalle.component';
 
 @Component({
   selector: 'app-control',
@@ -47,7 +49,8 @@ import { AutenticacionService } from '../../services/autenticacion';
     MatSnackBarModule,
     MatSelectModule,
     MatTooltipModule,
-    MatDialogModule],
+    MatDialogModule,
+    MatPaginatorModule],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -95,6 +98,10 @@ export class ControlComponent {
     this.dataSourceProducto = new MatTableDataSource<any>([]);
   }
 
+  @ViewChild('paginator') paginator!: MatPaginator;
+  @ViewChild('paginatorProyecto') paginator2!: MatPaginator;
+  @ViewChild('paginatorProducto') paginator3!: MatPaginator;
+
   ngOnInit() {
     this.obtenerUsuarios();
     this.obtenerProyectos();
@@ -109,6 +116,12 @@ export class ControlComponent {
       this.dataSourceProyecto.filter = query.trim().toLowerCase();
       this.dataSourceProducto.filter = query.trim().toLowerCase();
     });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSourceProyecto.paginator = this.paginator2;
+    this.dataSourceProducto.paginator = this.paginator3;
   }
 
   obtenerEstadosProyecto() {
@@ -171,7 +184,6 @@ export class ControlComponent {
   usuarioSesion!: UsuarioSesion;
   obtenerDatosUsuarioSesion(){
     this.usuarioSesion = this.AutenticacionService.obtenerDatosUsuario();
-    console.log('usuarioSesion => ',this.usuarioSesion)
   }
 
   cambiarRol(usuario: any, nuevoRol: string) {
@@ -258,9 +270,8 @@ export class ControlComponent {
         type:tipo,
         data:data,
       },
-      width: '20%',
       disableClose: true,
-      panelClass: 'custom-modalbox',
+      panelClass: "dialog-responsive"
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -290,6 +301,26 @@ export class ControlComponent {
     });
   }
 
+  openDialogoDetalle(data: any, tipo:string): void {
+    const dialogRef = this.dialog.open(DialogoDetalleComponent, {
+      data: {
+        title: 'Detalle '+tipo,
+        buttonTitle: 'CREAR',
+        type:tipo,
+        data:data,
+        estadosProyectoData: this.estadosProyectos,
+        isEdit: false,
+      },
+      disableClose: true,
+      panelClass: "dialog-responsive"
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('result',result);
+      } 
+    });
+  }
+
   notificar(asunto:string,remitente:any,destinatario:any,mensaje:string):void {
     
     const notificacion = {
@@ -307,6 +338,7 @@ export class ControlComponent {
         console.error('Error al registrar el proyecto:', error);
       }
     );
+    
     
   }
 
@@ -366,11 +398,11 @@ export class ControlComponent {
         type:tipo,
         data:data,
         origin:origin,
-        admin: true
+        admin: true,
+        toEdit: false,
       },
-      width: '25%',
       disableClose: true,
-      panelClass: 'custom-modalbox',
+      panelClass: "dialog-responsive"
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

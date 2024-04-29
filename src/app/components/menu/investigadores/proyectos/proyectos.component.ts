@@ -59,6 +59,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DialogoConfiguracionEntregableComponent } from './dialogo-configuracion-entregable/dialogo-configuracion-entregable.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DialogoAvanceEntregableComponent } from './dialogo-avance-entregable/dialogo-avance-entregable.component';
+import { DialogoDetalleComponent } from '../../administrador/control/dialogo-detalle/dialogo-detalle.component';
 
 @Component({
   selector: 'app-proyectos',
@@ -141,6 +142,8 @@ export class ProyectosComponent implements OnInit {
   expandedElement: any | null;
   proyectosData: any[] = [];
   productosData: any[] = [];
+  allProyectosData: any[] = [];
+  allProductosData: any[] = [];
   estadosProyectos: any[] = [];
   estadosProductos: any[] = [];
 
@@ -497,9 +500,7 @@ export class ProyectosComponent implements OnInit {
         type:tipo,
         data:data,
       },
-      width: '25%',
-      disableClose: true,
-      panelClass: 'custom-modalbox',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -525,9 +526,7 @@ export class ProyectosComponent implements OnInit {
         origin:origin,
         admin: false
       },
-      width: '25%',
-      disableClose: true,
-      panelClass: 'custom-modalbox',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -611,9 +610,7 @@ export class ProyectosComponent implements OnInit {
         title: 'Creación Estudiante',
         buttonTitle: 'CREAR',
       },
-      width: '30%',
-      disableClose: true,
-      panelClass: 'custom-modalbox',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -634,9 +631,7 @@ export class ProyectosComponent implements OnInit {
         title: 'Creación Participante',
         buttonTitle: 'CREAR',
       },
-      width: '30%',
-      disableClose: true,
-      panelClass: 'custom-modalbox',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -1511,6 +1506,25 @@ thumbLabel6 = false;
     );
   }
 
+  openDialogoDetalle(data: any, tipo:string, isEdit:boolean): void {
+    const dialogRef = this.dialog.open(DialogoDetalleComponent, {
+      data: {
+        title: isEdit ? 'Editar '+tipo : 'Detalle '+tipo,
+        buttonTitle: 'Guardar',
+        type: tipo,
+        data:tipo==='Proyecto' ? this.allProyectosData.find(x => x.codigo === data.codigo) : this.allProductosData.find(x => x.id === data.id),
+        isEdit: isEdit
+      },
+      disableClose: true,
+      panelClass: "dialog-responsive"
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('result',result);
+      } 
+    });
+  }
+
   //--------------------------------------------------------------------------------------
   //--------------------------------------------------------------------------------------
   //------------------------------------------TABLA -----------------------------------
@@ -1533,6 +1547,9 @@ thumbLabel6 = false;
       this.ProyectoyproductoService.getProductosDelUsuario(),
       this.ProyectoyproductoService.getProyectosDelUsuario()
     ]).subscribe(([productos, proyectos]) => {
+
+      this.allProyectosData = proyectos;
+      this.allProductosData = productos;
       // Ajustar los datos de los productos para asegurarse de que tengan todas las propiedades definidas en la interfaz Producto
       const productosAjustados = productos.reverse().map(producto => ({
         ...producto,
@@ -1549,6 +1566,7 @@ thumbLabel6 = false;
       
       // Convertir los datos de proyectos a la misma estructura que productos
       const proyectosAjustados = proyectos.reverse().map(proyecto => ({
+        ...proyecto,
         tituloProducto: proyecto.titulo,
         etapa: this.estadosProductos.find(p => p.id === proyecto.estado).estado,
         id: proyecto.codigo,
