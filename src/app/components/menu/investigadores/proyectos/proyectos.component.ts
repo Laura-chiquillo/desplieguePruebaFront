@@ -1551,31 +1551,26 @@ thumbLabel6 = false;
       this.allProyectosData = proyectos;
       this.allProductosData = productos;
       // Ajustar los datos de los productos para asegurarse de que tengan todas las propiedades definidas en la interfaz Producto
-      const productosAjustados = productos.filter(x => x.coinvestigador.includes(this.usuarioSesion.numerodocumento)).map(producto => ({
-        ...producto,
-        tipo: 'Producto',
-        id:producto.id,
-        tituloProducto: producto.tituloProducto || '', // Asegurar que todas las propiedades definidas en la interfaz Producto estén presentes
-        fecha: producto.fecha || '',
-        estadoProducto: producto.estadoProceso || '',
-        etapa: this.estadosProductos.find(p => p.id === producto.estadoProducto).estado,
-        tipologiaProducto: producto.tipologiaProducto || '',
-        observacion: producto.observacion,
-        investigador: producto.investigador,
-      }));
-      
-      // Convertir los datos de proyectos a la misma estructura que productos
       const proyectosAjustados = proyectos.filter(x => x.coinvestigador.includes(this.usuarioSesion.numerodocumento)).map(proyecto => ({
         ...proyecto,
         tituloProducto: proyecto.titulo,
-        etapa: this.estadosProductos.find(p => p.id === proyecto.estado).estado,
-        id: proyecto.codigo,
+        etapa: proyecto.etapa,
         fecha: proyecto.fecha,
-        estadoProceso: proyecto.estadoProceso,
         tipo: 'Proyecto',
-        observacion: proyecto.observacion,
-        investigador: proyecto.investigador,
+        updated_at: proyecto.updated_at,
+        created_at: proyecto.created_at,
         // Añadir las demás propiedades según sea necesario
+      }));
+      // Ajustar los datos de los productos para asegurarse de que tengan todas las propiedades definidas en la interfaz Producto
+      const productosAjustados = productos.filter(x => x.coinvestigador.includes(this.usuarioSesion.numerodocumento)).map(producto => ({
+        ...producto,
+        tipo: 'Producto',
+        tituloProducto: producto.tituloProducto || '', // Asegurar que todas las propiedades definidas en la interfaz Producto estén presentes
+        fecha: producto.fecha || '',
+        estadoProducto: producto.estado_producto || '',
+        tipologiaProducto: producto.tipologiaProducto || '',
+        updated_at: producto.updated_at,
+        created_at: producto.created_at,
       }));
     
       // Concatenar los datos ajustados de proyectos con los datos de productos
