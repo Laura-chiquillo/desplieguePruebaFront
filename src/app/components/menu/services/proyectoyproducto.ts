@@ -20,7 +20,7 @@ export class ProyectoyproductoService {
 
   getProyectos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl3}`);
-  }
+  } 
   
   private apiUrl4 = 'https://app-proyecto-119c428c75f0.herokuapp.com/producto';
   getProductos(): Observable<any[]> {
