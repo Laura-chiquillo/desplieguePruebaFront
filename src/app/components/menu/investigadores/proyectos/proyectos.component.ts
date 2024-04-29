@@ -511,7 +511,6 @@ export class ProyectosComponent implements OnInit {
           icon: 'success',
           confirmButtonText: 'Aceptar'
         });
-        
       } 
     });
   }
@@ -1520,7 +1519,14 @@ thumbLabel6 = false;
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('result',result);
+        this.ngOnInit();
+        this.ngAfterViewInit();
+        Swal.fire({
+          title: 'Registro Exitoso !!!',
+          text: 'Se ha editado el registro',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
       } 
     });
   }
@@ -1551,26 +1557,31 @@ thumbLabel6 = false;
       this.allProyectosData = proyectos;
       this.allProductosData = productos;
       // Ajustar los datos de los productos para asegurarse de que tengan todas las propiedades definidas en la interfaz Producto
-      const proyectosAjustados = proyectos.filter(x => x.coinvestigador.includes(this.usuarioSesion.numerodocumento)).map(proyecto => ({
-        ...proyecto,
-        tituloProducto: proyecto.titulo,
-        etapa: proyecto.etapa,
-        fecha: proyecto.fecha,
-        tipo: 'Proyecto',
-        updated_at: proyecto.updated_at,
-        created_at: proyecto.created_at,
-        // Añadir las demás propiedades según sea necesario
-      }));
-      // Ajustar los datos de los productos para asegurarse de que tengan todas las propiedades definidas en la interfaz Producto
-      const productosAjustados = productos.filter(x => x.coinvestigador.includes(this.usuarioSesion.numerodocumento)).map(producto => ({
+      const productosAjustados = productos.reverse().map(producto => ({
         ...producto,
         tipo: 'Producto',
+        id:producto.id,
         tituloProducto: producto.tituloProducto || '', // Asegurar que todas las propiedades definidas en la interfaz Producto estén presentes
         fecha: producto.fecha || '',
-        estadoProducto: producto.estado_producto || '',
+        estadoProducto: producto.estadoProceso || '',
+        etapa: this.estadosProductos.find(p => p.id === producto.estadoProducto).estado,
         tipologiaProducto: producto.tipologiaProducto || '',
-        updated_at: producto.updated_at,
-        created_at: producto.created_at,
+        observacion: producto.observacion,
+        investigador: producto.investigador,
+      }));
+      
+      // Convertir los datos de proyectos a la misma estructura que productos
+      const proyectosAjustados = proyectos.reverse().map(proyecto => ({
+        ...proyecto,
+        tituloProducto: proyecto.titulo,
+        etapa: this.estadosProductos.find(p => p.id === proyecto.estado).estado,
+        id: proyecto.codigo,
+        fecha: proyecto.fecha,
+        estadoProceso: proyecto.estadoProceso,
+        tipo: 'Proyecto',
+        observacion: proyecto.observacion,
+        investigador: proyecto.investigador,
+        // Añadir las demás propiedades según sea necesario
       }));
     
       // Concatenar los datos ajustados de proyectos con los datos de productos
