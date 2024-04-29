@@ -7,14 +7,14 @@
       "type": "chrome",
       "request": "launch",
       "preLaunchTask": "npm: start",
-      "url": "https://app-proyecto-119c428c75f0.herokuapp.com/"
+      "url": "https://app-frontendprueba-f346984aaa03.herokuapp.com/"
     },
     {
       "name": "ng test",
       "type": "chrome",
       "request": "launch",
       "preLaunchTask": "npm: test",
-      "url": "https://app-proyecto-119c428c75f0.herokuapp.com/"
+      "url": "https://app-frontendprueba-f346984aaa03.herokuapp.com/"
     }
   ]
 }
