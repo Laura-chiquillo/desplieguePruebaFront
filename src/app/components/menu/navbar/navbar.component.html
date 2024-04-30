@@ -86,15 +86,13 @@
                 <mat-form-field class="form-field-spacing" appearance="fill">
                   <input type="text" matInput autocomplete="off" formControlName="apellidos">
                 </mat-form-field>
-                <form [formGroup]="miFormulario">
                   <mat-form-field class="form-field-spacing" appearance="fill">
                     <input type="email" matInput autocomplete="off" formControlName="correo">
-                    <mat-error *ngIf="miFormulario.get('correo')?.hasError('pattern')"> 
+                    <mat-error *ngIf="registroForm.get('correo')?.hasError('pattern')"> 
                       Por favor, introduce un correo electrónico válido de &#64;unbosque.edu.c
 
                     </mat-error>
                   </mat-form-field>
-                </form>
                                
               </div>
               <div class="titulo">

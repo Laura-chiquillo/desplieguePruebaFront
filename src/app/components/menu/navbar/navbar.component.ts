@@ -15,11 +15,11 @@ export class NavbarComponent {
   constructor(private router: Router, private InvestigadorService: InvestigadorService, private formBuilder: FormBuilder,
     private autenticacionService: AutenticacionService) {
     this.registroForm = this.formBuilder.group({
-      nombre: ['', [Validators.required]],
-      apellidos: ['', [Validators.required]],
-      correo: ['', [Validators.required, Validators.email]],
+      nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+      apellidos: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+      correo: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@unbosque\.edu\.c$/)]],
       tipodocumento: ['', [Validators.required]],
-      numerodocumento: ['', [Validators.required]],
+      numerodocumento: ['', [Validators.pattern(/^[0-9]+$/)]],
       contrasena: ['', [Validators.required, Validators.minLength(8)]],
       confirmarContrasena: ['', [Validators.required]],
     });
@@ -28,10 +28,6 @@ export class NavbarComponent {
       contrasena: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
-
-miFormulario = new FormGroup({
-  correo: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@unbosque\.edu\.c$/)])
-});
 
 
   // login
