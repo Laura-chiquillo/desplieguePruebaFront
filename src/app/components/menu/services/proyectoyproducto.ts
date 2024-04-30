@@ -209,7 +209,7 @@ export class ProyectoyproductoService {
   }
 
 
-  private apiAvanceEntregableProyecto = 'http://127.0.0.1:8000/avanceEntregableProyecto'; 
+  private apiAvanceEntregableProyecto = 'https://app-proyecto-119c428c75f0.herokuapp.com/avanceEntregableProyecto'; 
 
   avanceEntregablesProyecto(registro: any) {
     return this.http.post<any>(this.apiAvanceEntregableProyecto, this.convertirObjetoAvanceAFormData(registro));
@@ -219,7 +219,7 @@ export class ProyectoyproductoService {
     return this.http.get<any[]>(`${this.apiAvanceEntregableProyecto}`);
   }
 
-  private apiAvanceEntregableProducto = 'http://127.0.0.1:8000/avanceEntregableProducto'; 
+  private apiAvanceEntregableProducto = 'https://app-proyecto-119c428c75f0.herokuapp.com/avanceEntregableProducto'; 
 
   avanceEntregablesProducto(registro: any) {
     return this.http.post<any>(this.apiAvanceEntregableProducto, this.convertirObjetoAvanceAFormData(registro));
