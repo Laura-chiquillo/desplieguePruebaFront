@@ -89,7 +89,7 @@
                   <mat-form-field class="form-field-spacing" appearance="fill">
                     <input type="email" matInput autocomplete="off" formControlName="correo">
                     <mat-error *ngIf="registroForm.get('correo')?.hasError('pattern')"> 
-                      Por favor, introduce un correo electrónico válido de &#64;unbosque.edu.c
+                      Por favor, introduce un correo electrónico válido de &#64;unbosque.edu.co
                     </mat-error>
                   </mat-form-field>
                                
@@ -107,7 +107,7 @@
                 </mat-form-field>
                 <mat-form-field class="form-field-spacing2" appearance="fill">
                   <mat-label>Numero de documento</mat-label>
-                  <input matInput autocomplete="off" formControlName="numerodocumento">
+                  <input type="number" matInput autocomplete="off" formControlName="numerodocumento">
                 </mat-form-field>
               </div>
               <div class="titulo">

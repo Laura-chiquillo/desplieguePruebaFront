@@ -80,7 +80,12 @@ export class NavbarComponent {
         },
         (error) => {
           console.error('Error al iniciar sesión:', error);
-          // Manejar el error de inicio de sesión, por ejemplo, mostrar un mensaje al usuario
+          Swal.fire({
+            title: 'ERROR!!!',
+            text: 'Credenciales invalidas',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+          });
         }
       );
     }
