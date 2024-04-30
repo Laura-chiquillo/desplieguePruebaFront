@@ -29,6 +29,11 @@ export class NavbarComponent {
     });
   }
 
+miFormulario = new FormGroup({
+  correo: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@unbosque\.edu\.c$/)])
+});
+
+
   // login
   loginForm: FormGroup;
 
@@ -134,7 +139,6 @@ export class NavbarComponent {
 
   public registroForm: FormGroup;
   
-  private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   typedocument: string[] = ['CC', 'TI', 'CE', 'RC', 'PA'];
 
   
