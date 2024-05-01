@@ -81,7 +81,7 @@ export class PerfilAdministradorComponent  implements OnInit {
       lineainvestigacion: [{value: this.userData?.lineainvestigacion, disabled: this.inputDeshabilitado},[Validators.required]],
       unidadacademica: [{value: this.userData?.unidadAcademica, disabled: this.inputDeshabilitado},[Validators.required]],
     });
-    console.log('Formulario inicializado:', this.firstFormGroup);
+    console.log('Formulario inicializado:', this.firstFormGroup.value);
   }
   obtenerDatosUsuarioSesion(){
     this.usuarioSesion = this.autenticacionService.obtenerDatosUsuario();
