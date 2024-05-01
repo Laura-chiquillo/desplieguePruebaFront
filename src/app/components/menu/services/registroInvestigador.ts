@@ -19,6 +19,28 @@ export class InvestigadorService {
     return this.http.get<any[]>(`${this.apiUrl}`);
   }
 
+  getUsuarioDetail(documento:string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${documento}`);
+  }
+
+  //Crear pregrado
+  private apiPregrado = 'https://app-proyecto-119c428c75f0.herokuapp.com/pregrado';
+  crearPregrado(data: any): Observable<any> {
+    return this.http.post<any>(this.apiPregrado, data);
+  }
+  obtenerPregrado(): Observable<any> {
+    return this.http.get<any[]>(this.apiPregrado);
+  }
+
+  //Crear posgrado
+  private apiPosgrado = 'https://app-proyecto-119c428c75f0.herokuapp.com/posgrado';
+  crearPosgrado(data: any): Observable<any> {
+    return this.http.post<any>(this.apiPosgrado, data);
+  }
+  obtenerPosgrado(): Observable<any> {
+    return this.http.get<any[]>(this.apiPosgrado);
+  }
+
   getNotifications(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiNotificaciones}`);
   }
