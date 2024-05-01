@@ -77,8 +77,8 @@ export class PerfilAdministradorComponent  implements OnInit {
       correo: [{value: this.userData?.correo, disabled: this.inputDeshabilitado },[Validators.required]],
       tipodocumento: [{value: this.userData?.tipodocumento, disabled: this.inputDeshabilitado }, [Validators.required]],
       escalofonodocente: [{value: this.userData?.escalofonodocente, disabled: this.inputDeshabilitado },[Validators.required]],
-      horariosestrictos: [{value: this.userData?.horariosestrictos, disabled: this.inputDeshabilitado},[Validators.required]],
-      horariosformacion: [{value: this.userData?.horariosformacion, disabled: this.inputDeshabilitado},[Validators.required]],
+      horariosestrictos: [{value: this.userData?.horasestricto, disabled: this.inputDeshabilitado},[Validators.required]],
+      horariosformacion: [{value: this.userData?.horasformacion, disabled: this.inputDeshabilitado},[Validators.required]],
       lineainvestigacion: [{value: this.userData?.lineainvestigacion, disabled: this.inputDeshabilitado},[Validators.required]],
       unidadacademica: [{value: this.userData?.unidadAcademica, disabled: this.inputDeshabilitado},[Validators.required]],
     });
