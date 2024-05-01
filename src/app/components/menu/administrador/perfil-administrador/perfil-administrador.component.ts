@@ -59,6 +59,7 @@ export class PerfilAdministradorComponent  implements OnInit {
     this.investigadorService.getUsuarioDetail(this.usuarioSesion.numerodocumento).subscribe(
       (data) => {
         this.userData = data;
+        console.log('Datos del usuario:', this.userData);
         this.initializeFormGroup();
       },
       (error) => {
@@ -80,6 +81,7 @@ export class PerfilAdministradorComponent  implements OnInit {
       lineainvestigacion: [{value: this.userData?.lineainvestigacion, disabled: this.inputDeshabilitado},[Validators.required]],
       unidadacademica: [{value: this.userData?.unidadAcademica, disabled: this.inputDeshabilitado},[Validators.required]],
     });
+    console.log('Formulario inicializado:', this.firstFormGroup);
   }
   obtenerDatosUsuarioSesion(){
     this.usuarioSesion = this.autenticacionService.obtenerDatosUsuario();
