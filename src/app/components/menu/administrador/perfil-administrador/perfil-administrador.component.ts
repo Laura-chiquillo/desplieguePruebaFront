@@ -69,6 +69,7 @@ export class PerfilAdministradorComponent  implements OnInit {
   }
 
   initializeFormGroup() {
+    if (this.userData) {
     this.firstFormGroup = this.formBuilder.group({
       numerodocumento: [{value: this.userData?.numerodocumento, disabled: true }, [Validators.required]],
       nombre: [{value: this.userData.nombre, disabled: this.inputDeshabilitado}, [Validators.required]],
@@ -83,7 +84,7 @@ export class PerfilAdministradorComponent  implements OnInit {
     });
     console.log('Formulario inicializado:', this.firstFormGroup.value);
   }
-
+  }
   obtenerDatosUsuarioSesion(){
     this.usuarioSesion = this.autenticacionService.obtenerDatosUsuario();
   }
