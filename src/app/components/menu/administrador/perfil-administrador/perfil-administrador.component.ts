@@ -59,18 +59,7 @@ export class PerfilAdministradorComponent  implements OnInit {
     this.investigadorService.getUsuarioDetail(this.usuarioSesion.numerodocumento).subscribe(
       (data) => {
         this.userData = data;
-        this.firstFormGroup = this.formBuilder.group({
-          numerodocumento: [{value: this.userData?.numerodocumento, disabled: true }, [Validators.required]],
-          nombre: [{value: this.userData.nombre, disabled: this.inputDeshabilitado}, [Validators.required]],
-          apellidos: [{value: this.userData.apellidos, disabled: this.inputDeshabilitado },[Validators.required]],
-          correo: [{value: this.userData?.correo, disabled: this.inputDeshabilitado },[Validators.required]],
-          tipodocumento: [{value: this.userData?.tipodocumento, disabled: this.inputDeshabilitado }, [Validators.required]],
-          escalofonodocente: [{value: this.userData?.escalofonodocente, disabled: this.inputDeshabilitado },[Validators.required]],
-          horariosestrictos: [{value: this.userData?.horasestricto, disabled: this.inputDeshabilitado},[Validators.required]],
-          horariosformacion: [{value: this.userData?.horasformacion, disabled: this.inputDeshabilitado},[Validators.required]],
-          lineainvestigacion: [{value: this.userData?.lineainvestigacion, disabled: this.inputDeshabilitado},[Validators.required]],
-          unidadacademica: [{value: this.userData?.unidadAcademica, disabled: this.inputDeshabilitado},[Validators.required]],
-        });
+        this.initializeFormGroup();
       },
       (error) => {
         console.error('Error al obtener usuarios:', error);
@@ -78,6 +67,20 @@ export class PerfilAdministradorComponent  implements OnInit {
     );
   }
 
+  initializeFormGroup() {
+    this.firstFormGroup = this.formBuilder.group({
+      numerodocumento: [{value: this.userData?.numerodocumento, disabled: true }, [Validators.required]],
+      nombre: [{value: this.userData.nombre, disabled: this.inputDeshabilitado}, [Validators.required]],
+      apellidos: [{value: this.userData.apellidos, disabled: this.inputDeshabilitado },[Validators.required]],
+      correo: [{value: this.userData?.correo, disabled: this.inputDeshabilitado },[Validators.required]],
+      tipodocumento: [{value: this.userData?.tipodocumento, disabled: this.inputDeshabilitado }, [Validators.required]],
+      escalofonodocente: [{value: this.userData?.escalofonodocente, disabled: this.inputDeshabilitado },[Validators.required]],
+      horariosestrictos: [{value: this.userData?.horasestricto, disabled: this.inputDeshabilitado},[Validators.required]],
+      horariosformacion: [{value: this.userData?.horasformacion, disabled: this.inputDeshabilitado},[Validators.required]],
+      lineainvestigacion: [{value: this.userData?.lineainvestigacion, disabled: this.inputDeshabilitado},[Validators.required]],
+      unidadacademica: [{value: this.userData?.unidadAcademica, disabled: this.inputDeshabilitado},[Validators.required]],
+    });
+  }
   obtenerDatosUsuarioSesion(){
     this.usuarioSesion = this.autenticacionService.obtenerDatosUsuario();
   }
