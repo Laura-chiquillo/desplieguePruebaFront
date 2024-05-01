@@ -118,11 +118,8 @@
                 <mat-form-field class="form-field-spacing2" appearance="fill">
                   <mat-label>Numero de documento</mat-label>
                   <input  matInput autocomplete="off" formControlName="numerodocumento">
-                  <mat-error *ngIf="registroForm.get('numerodocumento')?.hasError('pattern')"> 
-                    Por favor, introduce un número de documento válido
-                  </mat-error>
                   <mat-error *ngIf="registroForm.get('numerodocumento')?.hasError('minlength')"> 
-                    El número de documento debe tener al menos 8 dígitos
+                    Por favor, introduce un número de documento válido, debe tener al menos 8 dígitos
                   </mat-error>
                 </mat-form-field>                
               </div>
