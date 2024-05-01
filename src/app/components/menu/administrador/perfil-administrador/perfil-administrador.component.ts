@@ -115,12 +115,12 @@ export class PerfilAdministradorComponent  implements OnInit {
 
   activarInput() {
     this.inputDeshabilitado = false;
-    this.ngOnInit();
+    //this.ngOnInit();
   }
 
   desactivarInput() {
     this.inputDeshabilitado = true;
-    this.ngOnInit();
+    //this.ngOnInit();
   }
 
   guardarDatos() {
