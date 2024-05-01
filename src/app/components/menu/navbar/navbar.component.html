@@ -131,7 +131,7 @@
                 <mat-form-field class="form-field-spacing2" appearance="fill">
                   <mat-label>Contraseña</mat-label>
                   <input matInput [type]="hide ? 'password' : 'text'" formControlName="contrasena">
-                  <mat-error *ngIf="registroForm.get('numerodocumento')?.hasError('minlength')"> 
+                  <mat-error *ngIf="registroForm.get('contrasena')?.hasError('minlength')"> 
                     Por favor introducir una contraseña con al menos 8 dígitos
                   </mat-error>
                   <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
