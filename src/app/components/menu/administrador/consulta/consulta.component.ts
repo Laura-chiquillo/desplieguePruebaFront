@@ -1,19 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTabsModule } from '@angular/material/tabs';
-import { InvestigadorService } from '../../services/registroInvestigador';
-import { CommonModule } from '@angular/common';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
-import { SearchService } from '../../services/search.service';
-import { ProyectoyproductoService } from '../../services/proyectoyproducto';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
-import * as XLSX from 'xlsx'
-import { DialogoEstadisticaComponent } from './dialogo-estadistica/dialogo-estadistica.component';
+import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import * as XLSX from 'xlsx';
+import { ProyectoyproductoService } from '../../services/proyectoyproducto';
+import { InvestigadorService } from '../../services/registroInvestigador';
+import { SearchService } from '../../services/search.service';
+import { DialogoEstadisticaComponent } from './dialogo-estadistica/dialogo-estadistica.component';
 
 @Component({
   selector: 'app-consulta',
@@ -63,18 +62,19 @@ export class ConsultaComponent {
   @ViewChild('paginatorProyecto') paginator2!: MatPaginator;
   @ViewChild('paginatorProducto') paginator3!: MatPaginator;
 
-  ngOnInit() {
-    this.obtenerUsuarios();
-    this.obtenerProyectos();
-    this.obtenerProductos();
-    this.obtenerEstadosProyecto();
-    this.obtenerEstadosProducto();
+  async ngOnInit() {
+    await this.obtenerUsuarios();
+    await this.obtenerProyectos();
+    await this.obtenerProductos();
+    await this.obtenerEstadosProyecto();
+    await this.obtenerEstadosProducto();
     this.searchService.getSearchQuery().subscribe(query => {
       this.dataSourceInvestigador.filter = query.trim().toLowerCase();
       this.dataSourceProyecto.filter = query.trim().toLowerCase();
       this.dataSourceProducto.filter = query.trim().toLowerCase();
     });
-  }
+}
+
 
   ngAfterViewInit() {
     this.dataSourceInvestigador.paginator = this.paginator;
