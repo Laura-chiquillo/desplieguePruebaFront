@@ -11,7 +11,8 @@ export class ParticipantesExternosService {
   
   constructor(private http: HttpClient) { }
 
-  private apiParticipanteExterno = 'https://app-proyecto-119c428c75f0.herokuapp.com/participantesExternos';
+  private apiParticipanteExterno = 'https://app-proyecto-119c428c75f0.herokuapp.com/
+  participantesExternos';
 
   getParticipantesExternos(): Observable<ParticipanteExterno[]> {
       return this.http.get<any>(`${this.apiParticipanteExterno}`);
