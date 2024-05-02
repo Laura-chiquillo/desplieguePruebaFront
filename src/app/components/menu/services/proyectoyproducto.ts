@@ -12,7 +12,7 @@ import { AutenticacionService } from './autenticacion';
 export class ProyectoyproductoService {
   
   constructor(private http: HttpClient,private  AutenticacionService:AutenticacionService) { }
-  
+   
   //Mostrar proyectos y productos
 
   private apiUrl3 = 'http://localhost:8000/proyecto';
