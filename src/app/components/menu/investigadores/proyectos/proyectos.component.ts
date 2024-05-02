@@ -34,32 +34,32 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import Swal from 'sweetalert2';
-import { DialogoDetalleComponent } from '../../administrador/control/dialogo-detalle/dialogo-detalle.component';
-import { DialogoCreacionEstudiantesComponent } from '../../dialogo-creacion-estudiantes/dialogo-creacion-estudiantes.component';
-import { DialogoCreacionParticipantesComponent } from '../../dialogo-creacion-participantes/dialogo-creacion-participantes.component';
 import { Investigador } from '../../modelo/investigador';
 import { Evento, Producto } from '../../modelo/productos';
 import { Coinvestigador, Estudiantes, ParticipanteExterno, Proyecto } from '../../modelo/proyectos';
-import { UsuarioSesion } from '../../modelo/usuario';
-import { AutenticacionService } from '../../services/autenticacion';
-import { EstudiantesService } from '../../services/estudiantes';
-import { ParticipantesExternosService } from '../../services/participantesExternos';
 import { ProyectoyproductoService } from '../../services/proyectoyproducto';
+import { EstudiantesService } from '../../services/estudiantes';
 import { InvestigadorService } from '../../services/registroInvestigador';
 import { SearchService } from '../../services/search.service';
-import { DialogoAvanceEntregableComponent } from './dialogo-avance-entregable/dialogo-avance-entregable.component';
+import * as moment from 'moment';
+import Swal from 'sweetalert2'
+import { AutenticacionService } from '../../services/autenticacion';
+import { UsuarioSesion } from '../../modelo/usuario';
+import { DialogoCreacionEstudiantesComponent } from '../../dialogo-creacion-estudiantes/dialogo-creacion-estudiantes.component';
+import { ParticipantesExternosService } from '../../services/participantesExternos';
+import { DialogoCreacionParticipantesComponent } from '../../dialogo-creacion-participantes/dialogo-creacion-participantes.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DialogoConfiguracionEntregableComponent } from './dialogo-configuracion-entregable/dialogo-configuracion-entregable.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DialogoAvanceEntregableComponent } from './dialogo-avance-entregable/dialogo-avance-entregable.component';
+import { DialogoDetalleComponent } from '../../administrador/control/dialogo-detalle/dialogo-detalle.component';
 
 @Component({
   selector: 'app-proyectos',
