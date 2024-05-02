@@ -34,32 +34,31 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import Swal from 'sweetalert2';
+import { DialogoCreacionEstudiantesComponent } from '../../dialogo-creacion-estudiantes/dialogo-creacion-estudiantes.component';
+import { DialogoCreacionParticipantesComponent } from '../../dialogo-creacion-participantes/dialogo-creacion-participantes.component';
 import { Investigador } from '../../modelo/investigador';
 import { Evento, Producto } from '../../modelo/productos';
 import { Coinvestigador, Estudiantes, ParticipanteExterno, Proyecto } from '../../modelo/proyectos';
-import { ProyectoyproductoService } from '../../services/proyectoyproducto';
+import { UsuarioSesion } from '../../modelo/usuario';
+import { AutenticacionService } from '../../services/autenticacion';
 import { EstudiantesService } from '../../services/estudiantes';
+import { ParticipantesExternosService } from '../../services/participantesExternos';
+import { ProyectoyproductoService } from '../../services/proyectoyproducto';
 import { InvestigadorService } from '../../services/registroInvestigador';
 import { SearchService } from '../../services/search.service';
-import * as moment from 'moment';
-import Swal from 'sweetalert2'
-import { AutenticacionService } from '../../services/autenticacion';
-import { UsuarioSesion } from '../../modelo/usuario';
-import { DialogoCreacionEstudiantesComponent } from '../../dialogo-creacion-estudiantes/dialogo-creacion-estudiantes.component';
-import { ParticipantesExternosService } from '../../services/participantesExternos';
-import { DialogoCreacionParticipantesComponent } from '../../dialogo-creacion-participantes/dialogo-creacion-participantes.component';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { DialogoConfiguracionEntregableComponent } from './dialogo-configuracion-entregable/dialogo-configuracion-entregable.component';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DialogoAvanceEntregableComponent } from './dialogo-avance-entregable/dialogo-avance-entregable.component';
-import { DialogoDetalleComponent } from '../../administrador/control/dialogo-detalle/dialogo-detalle.component';
+import { DialogoConfiguracionEntregableComponent } from './dialogo-configuracion-entregable/dialogo-configuracion-entregable.component';
 
 @Component({
   selector: 'app-proyectos',
@@ -142,8 +141,6 @@ export class ProyectosComponent implements OnInit {
   expandedElement: any | null;
   proyectosData: any[] = [];
   productosData: any[] = [];
-  allProyectosData: any[] = [];
-  allProductosData: any[] = [];
   estadosProyectos: any[] = [];
   estadosProductos: any[] = [];
 
@@ -500,7 +497,9 @@ export class ProyectosComponent implements OnInit {
         type:tipo,
         data:data,
       },
-      disableClose: true
+      width: '25%',
+      disableClose: true,
+      panelClass: 'custom-modalbox',
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -511,6 +510,7 @@ export class ProyectosComponent implements OnInit {
           icon: 'success',
           confirmButtonText: 'Aceptar'
         });
+        
       } 
     });
   }
@@ -525,7 +525,9 @@ export class ProyectosComponent implements OnInit {
         origin:origin,
         admin: false
       },
-      disableClose: true
+      width: '25%',
+      disableClose: true,
+      panelClass: 'custom-modalbox',
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -609,7 +611,9 @@ export class ProyectosComponent implements OnInit {
         title: 'Creación Estudiante',
         buttonTitle: 'CREAR',
       },
-      disableClose: true
+      width: '30%',
+      disableClose: true,
+      panelClass: 'custom-modalbox',
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -630,7 +634,9 @@ export class ProyectosComponent implements OnInit {
         title: 'Creación Participante',
         buttonTitle: 'CREAR',
       },
-      disableClose: true
+      width: '30%',
+      disableClose: true,
+      panelClass: 'custom-modalbox',
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -1505,32 +1511,6 @@ thumbLabel6 = false;
     );
   }
 
-  openDialogoDetalle(data: any, tipo:string, isEdit:boolean): void {
-    const dialogRef = this.dialog.open(DialogoDetalleComponent, {
-      data: {
-        title: isEdit ? 'Editar '+tipo : 'Detalle '+tipo,
-        buttonTitle: 'Guardar',
-        type: tipo,
-        data:tipo==='Proyecto' ? this.allProyectosData.find(x => x.codigo === data.codigo) : this.allProductosData.find(x => x.id === data.id),
-        isEdit: isEdit
-      },
-      disableClose: true,
-      panelClass: "dialog-responsive"
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.ngOnInit();
-        this.ngAfterViewInit();
-        Swal.fire({
-          title: 'Registro Exitoso !!!',
-          text: 'Se ha editado el registro',
-          icon: 'success',
-          confirmButtonText: 'Aceptar'
-        });
-      } 
-    });
-  }
-
   //--------------------------------------------------------------------------------------
   //--------------------------------------------------------------------------------------
   //------------------------------------------TABLA -----------------------------------
@@ -1553,9 +1533,6 @@ thumbLabel6 = false;
       this.ProyectoyproductoService.getProductosDelUsuario(),
       this.ProyectoyproductoService.getProyectosDelUsuario()
     ]).subscribe(([productos, proyectos]) => {
-
-      this.allProyectosData = proyectos;
-      this.allProductosData = productos;
       // Ajustar los datos de los productos para asegurarse de que tengan todas las propiedades definidas en la interfaz Producto
       const productosAjustados = productos.reverse().map(producto => ({
         ...producto,
@@ -1572,7 +1549,6 @@ thumbLabel6 = false;
       
       // Convertir los datos de proyectos a la misma estructura que productos
       const proyectosAjustados = proyectos.reverse().map(proyecto => ({
-        ...proyecto,
         tituloProducto: proyecto.titulo,
         etapa: this.estadosProductos.find(p => p.id === proyecto.estado).estado,
         id: proyecto.codigo,
