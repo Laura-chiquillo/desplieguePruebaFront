@@ -15,13 +15,13 @@ export class NavbarComponent {
   constructor(private router: Router, private InvestigadorService: InvestigadorService, private formBuilder: FormBuilder,
     private autenticacionService: AutenticacionService) {
     this.registroForm = this.formBuilder.group({
-      nombre: ['', [Validators.required]],
-      apellidos: ['', [Validators.required]],
-      correo: ['', [Validators.required, Validators.email]],
-      tipodocumento: ['', [Validators.required]],
-      numerodocumento: ['', [Validators.required]],
-      contrasena: ['', [Validators.required, Validators.minLength(8)]],
-      confirmarContrasena: ['', [Validators.required]],
+        nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+        apellidos: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+        correo: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@unbosque\.edu\.co$/)]],
+        tipodocumento: ['', [Validators.required]],
+        numerodocumento: ['', [Validators.required,Validators.pattern(/^[0-9]+$/),Validators.minLength(8)]],
+        contrasena: ['', [Validators.required, Validators.minLength(8)]],
+        confirmarContrasena: ['', [Validators.required]],
     });
     this.loginForm = this.formBuilder.group({
       correo: ['', [Validators.required, Validators.email]],
